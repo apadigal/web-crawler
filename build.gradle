@@ -22,11 +22,14 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.data:spring-data-rest-hal-browser'
-    compileOnly 'org.projectlombok:lombok'
+    compile      group: 'org.springframework.boot',      name: 'spring-boot-starter-data-rest',  version: "${springBootVersion}"
+    compile      group:  'org.springframework.boot', 	 name: 'spring-boot-starter-actuator',	 version: "${springBootVersion}"
+    compile      group: 'org.jsoup',                     name: 'jsoup',                          version: '1.10.3'
+
+    compile 'org.projectlombok:lombok'
+
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 ext {
@@ -41,4 +44,10 @@ test {
 asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardError"
+    }
 }
